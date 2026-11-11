@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #0f172a;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  /* Slide-in animations start slightly off-screen; never let them create a horizontal scrollbar.
+     `clip` (unlike `hidden`) keeps position: sticky working. */
+  body {
+    overflow-x: clip;
+  }
+}
+
+.bg-dot-grid {
+  background-color: #f7faff;
+  background-image: radial-gradient(rgba(56, 189, 248, 0.22) 1.25px, transparent 1.25px);
+  background-size: 20px 20px;
+}
+
+.bg-dot-grid-light {
+  background-color: #fafcff;
+  background-image: radial-gradient(rgba(14, 165, 233, 0.16) 1.25px, transparent 1.25px);
+  background-size: 18px 18px;
+}
+
+/* Fine "circuit" grid with a soft fade at the edges. */
+.bg-tech-grid {
+  background-color: #fbfdff;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.09) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-gradient-ice {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    radial-gradient(circle at 100% 100%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    #ffffff;
+}
+
+.bg-radial-blue-hero {
+  background: radial-gradient(circle at 50% 45%, rgba(186, 230, 253, 0.45) 0%, rgba(224, 242, 254, 0.25) 35%, rgba(255, 255, 255, 0) 70%);
+}
+
+.bg-radial-core {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(56, 189, 248, 0.12) 45%, transparent 70%);
+}
+
+.glow-blue-lg {
+  box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.35);
+}
+
+.glow-blue-sm {
+  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.25);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.shadow-card {
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.03),
+    0 12px 32px -8px rgba(14, 165, 233, 0.08);
+}
+
+.shadow-float {
+  box-shadow:
+    0 4px 14px rgba(14, 165, 233, 0.07),
+    0 24px 48px -12px rgba(15, 23, 42, 0.09);
+}
+
+.shadow-glass {
+  box-shadow:
+    0 4px 20px -2px rgba(14, 165, 233, 0.12),
+    0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinSlowReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 32s linear infinite;
+}
+
+.animate-reverse-spin {
+  animation: spinSlowReverse 42s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-dash-flow {
+  animation: dashFlow 2.5s linear infinite;
+}
+
+/* Performance: CSS animations are switched off in sections that are scrolled out of view. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation: none !important;
+}
+
+/* Hero ambient rotation runs on the compositor thread (no per-frame JavaScript). */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-spin-ring {
+    animation: spinSlow 90s linear infinite;
+  }
+  .hero-orbit {
+    animation: spinSlow 140s linear infinite;
+  }
+}
+
+/* Next.js: the server-rendered page stays hidden until the animation layer has set its start states
+   (set in SiteShell). The 4s fallback guarantees the page can never stay hidden. */
+html:not([data-ready]) body {
+  visibility: hidden;
+  animation: affina-unhide 0s linear 4s forwards;
+}
+@keyframes affina-unhide {
+  to {
+    visibility: visible;
+  }
+}
+
+/* Soft colour glows in section corners (same as Iris). Masked edge, no CSS blur. */
+.aurora-sky {
+  background: #bae6fd;
+}
+.aurora-indigo {
+  background: #c7d2fe;
+}
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.7;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+}
+
+
+/* Desktop scale: on screens 1200px and wider the site renders at 80%, like browser zoom at 80%: more side margin, finer type. --zf is that factor for the few places that need it. */
+:root { --zf: 1; }
+@media (min-width: 1200px) { :root { --zf: 0.8; } html { zoom: 0.8; } }
+
+/* Hero: orb float, orb ring sway and drifting ribbons. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-orb { animation: heroOrbFloat 6s ease-in-out infinite; }
+  .hero-orb-ring { animation: heroRingSway 8s ease-in-out infinite; }
+  .hero-ribbon-a { animation: heroRibbon 14s ease-in-out infinite alternate; transform-origin: 0% 100%; }
+  .hero-ribbon-b { animation: heroRibbon 17s ease-in-out infinite alternate-reverse; transform-origin: 100% 100%; }
+}
+@keyframes heroOrbFloat { 0%, 100% { transform: translateY(-4px); } 50% { transform: translateY(5px); } }
+@keyframes heroRingSway { 0%, 100% { rotate: -4deg; } 50% { rotate: 3deg; } }
+@keyframes heroRibbon { 0% { transform: translateX(0) scaleY(1); } 100% { transform: translateX(14px) scaleY(1.08); } }

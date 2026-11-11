@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #0f172a;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  /* Slide-in animations start slightly off-screen; never let them create a horizontal scrollbar.
+     `clip` (unlike `hidden`) keeps position: sticky working. */
+  body {
+    overflow-x: clip;
+  }
+}
+
+/* ------------------------------------------------------------------ surfaces */
+
+.bg-dot-grid {
+  background-color: #f7faff;
+  background-image: radial-gradient(rgba(56, 189, 248, 0.22) 1.25px, transparent 1.25px);
+  background-size: 20px 20px;
+}
+
+.bg-dot-grid-light {
+  background-color: #fafcff;
+  background-image: radial-gradient(rgba(14, 165, 233, 0.16) 1.25px, transparent 1.25px);
+  background-size: 18px 18px;
+}
+
+/* Fine "circuit" grid with a soft fade at the edges. */
+.bg-tech-grid {
+  background-color: #fbfdff;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.09) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-gradient-ice {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    radial-gradient(circle at 100% 100%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    #ffffff;
+}
+
+.bg-radial-blue-hero {
+  background: radial-gradient(circle at 50% 45%, rgba(186, 230, 253, 0.5) 0%, rgba(224, 242, 254, 0.28) 35%, rgba(255, 255, 255, 0) 70%);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.shadow-card {
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.03),
+    0 12px 32px -8px rgba(14, 165, 233, 0.08);
+}
+
+.shadow-float {
+  box-shadow:
+    0 4px 14px rgba(14, 165, 233, 0.07),
+    0 24px 48px -12px rgba(15, 23, 42, 0.09);
+}
+
+.glow-blue-sm {
+  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.3);
+}
+
+/* ------------------------------------------------------------ futuristic bits */
+
+/* Gradient text that slowly sweeps through the brand colours. */
+.text-shimmer {
+  background: linear-gradient(100deg, #0284c7 0%, #0ea5e9 25%, #6366f1 50%, #0ea5e9 75%, #0284c7 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* A bright beam travels around the border of the element. */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.beam-border {
+  position: relative;
+  isolation: isolate;
+}
+.beam-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--beam-angle), transparent 0 70%, rgba(14, 165, 233, 0.95) 82%, rgba(99, 102, 241, 0.9) 90%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Soft glow that follows the cursor inside a card (position set by SpotlightCard). */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(14, 165, 233, 0.13), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Slow drifting colour glows behind sections. */
+.aurora-sky {
+  background: #bae6fd;
+}
+.aurora-indigo {
+  background: #c7d2fe;
+}
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.7;
+  pointer-events: none;
+  /* soft edge via a mask (no CSS blur: cheaper, and no banding artefacts) */
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+}
+
+@keyframes hestiaScan {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(520%);
+  }
+}
+
+@keyframes hestiaPulseRing {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes hestiaDash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@keyframes hestiaBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .text-shimmer {
+    animation: hestiaShimmer 7s linear infinite;
+  }
+  .beam-border::before {
+    animation: hestiaBeam 6s linear infinite;
+  }
+  .anim-dash {
+    animation: hestiaDash 1.6s linear infinite;
+  }
+  .anim-blink {
+    animation: hestiaBlink 1.4s ease-in-out infinite;
+  }
+  .anim-pulse-ring {
+    animation: hestiaPulseRing 2.4s ease-out infinite;
+  }
+  .anim-scan {
+    animation: hestiaScan 5s linear infinite;
+  }
+}
+
+@keyframes hestiaShimmer {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+@keyframes hestiaBeam {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Performance: CSS animations are switched off in sections that are scrolled out of view. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation: none !important;
+}
+
+/* The server-rendered page stays hidden until the animation layer has set its start states
+   (set in SiteShell). The 4s fallback guarantees the page can never stay hidden. */
+html:not([data-ready]) body {
+  visibility: hidden;
+  animation: hestia-unhide 0s linear 4s forwards;
+}
+@keyframes hestia-unhide {
+  to {
+    visibility: visible;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Slow spin of the hub's connection mark. */
+@media (prefers-reduced-motion: no-preference) {
+  .anim-hub-spin {
+    animation: hestiaHubSpin 24s linear infinite;
+  }
+}
+@keyframes hestiaHubSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Desktop scale: on screens 1200px and wider the site renders at 80%, like browser zoom at 80%: more side margin, finer type. --zf is that factor for the few places that need it. */
+:root { --zf: 1; }
+@media (min-width: 1200px) { :root { --zf: 0.8; } html { zoom: 0.8; } }

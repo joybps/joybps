@@ -1,0 +1,383 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #0f172a;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  /* Slide-in animations start slightly off-screen; never let them create a horizontal scrollbar.
+     `clip` (unlike `hidden`) keeps position: sticky working. */
+  body {
+    overflow-x: clip;
+  }
+}
+
+/* ------------------------------------------------------------------ surfaces */
+
+.bg-dot-grid {
+  background-color: #f7faff;
+  background-image: radial-gradient(rgba(56, 189, 248, 0.22) 1.25px, transparent 1.25px);
+  background-size: 20px 20px;
+}
+
+.bg-dot-grid-light {
+  background-color: #fafcff;
+  background-image: radial-gradient(rgba(14, 165, 233, 0.16) 1.25px, transparent 1.25px);
+  background-size: 18px 18px;
+}
+
+/* Fine "circuit" grid with a soft fade at the edges. */
+.bg-tech-grid {
+  background-color: #fbfdff;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.09) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-gradient-ice {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    radial-gradient(circle at 100% 100%, rgba(186, 230, 253, 0.45) 0%, rgba(186, 230, 253, 0) 42%),
+    #ffffff;
+}
+
+.bg-radial-blue-hero {
+  background: radial-gradient(circle at 50% 45%, rgba(186, 230, 253, 0.5) 0%, rgba(224, 242, 254, 0.28) 35%, rgba(255, 255, 255, 0) 70%);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.shadow-card {
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.03),
+    0 12px 32px -8px rgba(14, 165, 233, 0.08);
+}
+
+.shadow-float {
+  box-shadow:
+    0 4px 14px rgba(14, 165, 233, 0.07),
+    0 24px 48px -12px rgba(15, 23, 42, 0.09);
+}
+
+.glow-blue-sm {
+  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.3);
+}
+
+/* ------------------------------------------------------------ futuristic bits */
+
+/* Gradient text that slowly sweeps through the brand colours. */
+.text-shimmer {
+  background: linear-gradient(100deg, #0284c7 0%, #0ea5e9 25%, #6366f1 50%, #0ea5e9 75%, #0284c7 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* A bright beam travels around the border of the element. */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.beam-border {
+  position: relative;
+  isolation: isolate;
+}
+.beam-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--beam-angle), transparent 0 70%, rgba(14, 165, 233, 0.95) 82%, rgba(99, 102, 241, 0.9) 90%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Soft glow that follows the cursor inside a card (position set by SpotlightCard). */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(14, 165, 233, 0.13), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Slow drifting colour glows behind sections. */
+.aurora-sky {
+  background: #bae6fd;
+}
+.aurora-indigo {
+  background: #c7d2fe;
+}
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.7;
+  pointer-events: none;
+  /* soft edge via a mask (no CSS blur: cheaper, and no banding artefacts) */
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+}
+
+@keyframes hestiaScan {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(520%);
+  }
+}
+
+@keyframes hestiaPulseRing {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes hestiaDash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@keyframes hestiaBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .text-shimmer {
+    animation: hestiaShimmer 7s linear infinite;
+  }
+  .beam-border::before {
+    animation: hestiaBeam 6s linear infinite;
+  }
+  .anim-dash {
+    animation: hestiaDash 1.6s linear infinite;
+  }
+  .anim-blink {
+    animation: hestiaBlink 1.4s ease-in-out infinite;
+  }
+  .anim-pulse-ring {
+    animation: hestiaPulseRing 2.4s ease-out infinite;
+  }
+  .anim-scan {
+    animation: hestiaScan 5s linear infinite;
+  }
+}
+
+@keyframes hestiaShimmer {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+@keyframes hestiaBeam {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Performance: CSS animations are switched off in sections that are scrolled out of view. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation: none !important;
+}
+
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Slow spin of the hub's connection mark. */
+@media (prefers-reduced-motion: no-preference) {
+  .anim-hub-spin {
+    animation: hestiaHubSpin 24s linear infinite;
+  }
+}
+@keyframes hestiaHubSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.aurora-emerald {
+  background: #a7f3d0;
+}
+
+/* Joybooks mini animations (bento tiles) */
+@media (prefers-reduced-motion: no-preference) {
+  .jb-stamp { animation: jbStamp 6s ease-in-out infinite; }
+  .jb-bar { transform-origin: bottom; animation: jbBar 3.6s ease-in-out infinite; }
+  .jb-tick { animation: jbTick 5s ease-in-out infinite; }
+  .jb-scan { animation: jbScan 3.2s ease-in-out infinite; }
+  .jb-grow { transform-origin: bottom; animation: jbGrow 0.9s cubic-bezier(.2,.8,.2,1) both; }
+  .jb-growx { transform-origin: left; animation: jbGrowX 0.9s cubic-bezier(.2,.8,.2,1) both; }
+}
+@keyframes jbStamp {
+  0%, 35% { opacity: 0; transform: rotate(-12deg) scale(1.6); }
+  45%, 85% { opacity: 1; transform: rotate(-12deg) scale(1); }
+  100% { opacity: 0; transform: rotate(-12deg) scale(1); }
+}
+@keyframes jbBar {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(1); }
+}
+@keyframes jbTick {
+  0%, 30% { opacity: 0; transform: scale(0.4); }
+  45%, 85% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; }
+}
+@keyframes jbScan {
+  0% { top: 8%; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { top: 88%; opacity: 0; }
+}
+@keyframes jbGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes jbGrowX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes jbRowIn {
+  from { opacity: 0; transform: translateY(-14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes jbChipPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.aurora-amber {
+  background: #fde68a;
+}
+
+/* Living Mind hero: the real headline fades in once the particle headline has condensed */
+.mind-h1 { opacity: 0; animation: mindFallback 0.5s ease 4.5s forwards; }
+[data-mind-ready] .mind-h1 { opacity: 1; animation: none; transition: opacity 0.8s ease; }
+@keyframes mindFallback { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .mind-h1 { opacity: 1; animation: none; } }
+
+/* hero stage text: each word rises out of a soft blur */
+@keyframes stageIn { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes stageBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.stage-in { opacity: 0; animation: stageIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.stage-bar { transform-origin: left; animation: stageBar 6.6s linear forwards; }
+@media (prefers-reduced-motion: reduce) { .stage-in { opacity: 1; animation: none; } .stage-bar { animation: none; transform: scaleX(1); } }
+
+/* ---------- section visuals (capabilities, services, product cards) ---------- */
+@keyframes vBar { 0%, 100% { transform: scaleY(0.2); } 50% { transform: scaleY(1); } }
+@keyframes vDots { 0%, 70%, 100% { opacity: 0.25; transform: translateY(0); } 35% { opacity: 1; transform: translateY(-3px); } }
+@keyframes vScan { 0% { top: 4%; } 100% { top: 90%; } }
+@keyframes vFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes vDash { to { stroke-dashoffset: -28; } }
+@keyframes vPop { 0%, 12% { opacity: 0; transform: scale(0.8); } 24%, 72% { opacity: 1; transform: scale(1); } 88%, 100% { opacity: 0; transform: scale(0.95); } }
+@keyframes vGrow { 0% { transform: scaleY(0); } 28%, 82% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+@keyframes vRise { 0%, 6% { opacity: 0; transform: translateY(14px); } 22%, 78% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: translateY(-8px); } }
+@keyframes vRing { 0% { transform: scale(0.35); opacity: 0.55; } 100% { transform: scale(1.7); opacity: 0; } }
+@keyframes vType { 0% { transform: scaleX(0); } 26%, 84% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes vTravel { 0% { transform: translateX(0); opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { transform: translateX(var(--d, 80px)); opacity: 0; } }
+@keyframes vDraw { 0% { stroke-dashoffset: 120; } 40%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 120; } }
+@keyframes vSwipe { 0%, 15% { transform: translateX(0); } 40%, 60% { transform: translateX(-100%); } 85%, 100% { transform: translateX(0); } }
+@keyframes vSweep { 0% { transform: translateX(-120%); } 100% { transform: translateX(220%); } }
+.v-bar { transform-origin: center; animation: vBar 1.3s ease-in-out infinite; }
+.v-dot { animation: vDots 1.2s ease-in-out infinite; }
+.v-scan { animation: vScan 2.4s ease-in-out infinite alternate; }
+.v-float { animation: vFloat 5s ease-in-out infinite; }
+.v-dash { stroke-dasharray: 6 8; animation: vDash 1.2s linear infinite; }
+.v-pop { animation: vPop 5s ease-in-out infinite; }
+.v-grow { transform-origin: bottom; animation: vGrow 5.5s ease-in-out infinite; }
+.v-rise { animation: vRise 6s ease-in-out infinite; }
+.v-ring { animation: vRing 3s ease-out infinite; }
+.v-type { transform-origin: left; animation: vType 6s ease-in-out infinite; }
+.v-travel { animation: vTravel 2.4s ease-in-out infinite; }
+.v-draw { stroke-dasharray: 120; animation: vDraw 6s ease-in-out infinite; }
+.v-sweep { animation: vSweep 3.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .v-bar, .v-dot, .v-scan, .v-float, .v-dash, .v-pop, .v-grow, .v-rise, .v-ring, .v-type, .v-travel, .v-draw, .v-sweep { animation: none; }
+  .v-pop, .v-rise { opacity: 1; }
+}
+
+/* ---------- product card extras ---------- */
+@property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes spinA { to { --a: 360deg; } }
+.pc-border {
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; opacity: 0; transition: opacity 0.5s;
+  background: conic-gradient(from var(--a), transparent 0 62%, var(--c, #38bdf8) 82%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.group:hover > .pc-border, .group:focus-within > .pc-border { opacity: 1; animation: spinA 3.2s linear infinite; }
+@keyframes vLead { 0%, 14% { transform: translateX(0); } 34%, 50% { transform: translateX(calc(100% + 6px)); } 72%, 100% { transform: translateX(calc(200% + 12px)); } }
+@keyframes vStamp { 0%, 30% { opacity: 0; transform: rotate(-14deg) scale(2.2); } 42%, 82% { opacity: 1; transform: rotate(-14deg) scale(1); } 94%, 100% { opacity: 0; transform: rotate(-14deg) scale(1); } }
+@keyframes vExec { 0%, 6% { stroke: #cbd5e1; } 12%, 72% { stroke: #10b981; } 92%, 100% { stroke: #cbd5e1; } }
+.v-lead { animation: vLead 6s ease-in-out infinite; }
+.v-stamp { animation: vStamp 5s ease-out infinite; }
+.v-exec { stroke: #cbd5e1; animation: vExec 7s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .v-lead, .v-stamp, .v-exec, .group:hover > .pc-border { animation: none; } }
+
+/* Desktop scale: on screens 1200px and wider the whole site renders at 80%, like browser zoom at 80%: more side margin, finer type. --zf is that factor, for the few places that need to know (full-height hero). */
+:root { --zf: 1; }
+@media (min-width: 1200px) { :root { --zf: 0.8; } html { zoom: 0.8; } }
+
+/* demo screens: the product UI is drawn larger on desktop so the taller frame is filled */
+@media (min-width: 1024px) { .demo-zoom { zoom: 1.2; } }
