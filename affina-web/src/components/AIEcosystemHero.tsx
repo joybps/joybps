@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { ArrowRight, Play, Target, Globe, FileSpreadsheet, Sparkles, Mail, Database, Users } from 'lucide-react';
+import { ArrowRight, Play, Target, Globe, FileSpreadsheet, Sparkles, Mail, Database } from 'lucide-react';
 import { gsap, useGSAP, scrollToId, MOTION_OK, runWhileVisible } from '../animation';
 
 interface AIEcosystemHeroProps {
@@ -190,7 +190,6 @@ export const AIEcosystemHero: React.FC<AIEcosystemHeroProps> = ({ onOpenDemo }) 
   const [hoveredLogo, setHoveredLogo] = useState<FloatingLogo | null>(null);
 
   const rootRef = useRef<HTMLElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
   const agentCountRef = useRef<HTMLSpanElement>(null);
   const verticalCountRef = useRef<HTMLSpanElement>(null);
 
@@ -201,8 +200,6 @@ export const AIEcosystemHero: React.FC<AIEcosystemHeroProps> = ({ onOpenDemo }) 
 
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        const scrollTrigger = { trigger: root, start: 'top top', end: 'bottom top', scrub: true };
-
         // 1. Load timeline
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.from('[data-ring]', { scale: 0.8, autoAlpha: 0, duration: 1.6, stagger: 0.15, ease: 'power2.out' }, 0)
@@ -279,39 +276,9 @@ export const AIEcosystemHero: React.FC<AIEcosystemHeroProps> = ({ onOpenDemo }) 
           );
         });
 
-        // 4. Scroll parallax (desktop only)
-        mm.add('(min-width: 768px)', () => {
-          gsap.to('[data-hero-content]', { yPercent: -7, ease: 'none', scrollTrigger });
-          gsap.to('[data-logos-layer]', { y: -80, ease: 'none', scrollTrigger });
-          gsap.to('[data-rings]', { y: 70, scale: 1.06, ease: 'none', scrollTrigger });
-        });
-
-        // Soft light that follows the pointer (fine pointers only; coordinates corrected for the page zoom).
-        const glow = glowRef.current;
-        let off: (() => void) | undefined;
-        if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-          const gx = gsap.quickTo(glow, 'x', { duration: 0.9, ease: 'power3.out' });
-          const gy = gsap.quickTo(glow, 'y', { duration: 0.9, ease: 'power3.out' });
-          const move = (e: PointerEvent) => {
-            const r = root.getBoundingClientRect();
-            const z = r.width / (root.clientWidth || 1) || 1;
-            gx((e.clientX - r.left) / z - 280);
-            gy((e.clientY - r.top) / z - 280);
-            gsap.to(glow, { opacity: 1, duration: 0.6, overwrite: 'auto' });
-          };
-          const leave = () => gsap.to(glow, { opacity: 0, duration: 0.8 });
-          root.addEventListener('pointermove', move, { passive: true });
-          root.addEventListener('pointerleave', leave);
-          off = () => {
-            root.removeEventListener('pointermove', move);
-            root.removeEventListener('pointerleave', leave);
-          };
-        }
-
         const stopLoops = runWhileVisible(rootRef.current, loops);
         return () => {
           stopLoops?.();
-          off?.();
         };
       });
     },
@@ -322,29 +289,8 @@ export const AIEcosystemHero: React.FC<AIEcosystemHeroProps> = ({ onOpenDemo }) 
     <section
       ref={rootRef}
       id="top"
-      className="relative bg-[linear-gradient(180deg,#f3f8ff_0%,#e9f2ff_52%,#f5f9ff_100%)] overflow-hidden border-b border-sky-100/70 pt-8 sm:pt-12 pb-20 sm:pb-28 lg:pb-32 min-h-[720px] sm:min-h-[820px] flex flex-col justify-center"
+      className="relative bg-[linear-gradient(180deg,#f3f8ff_0%,#e9f2ff_52%,#f5f9ff_100%)] overflow-hidden border-b border-sky-100/70 pt-16 sm:pt-24 pb-20 sm:pb-28 lg:pb-32 min-h-[720px] sm:min-h-[820px] flex flex-col justify-center"
     >
-      {/* Soft corner light and flowing ribbons (decorative) */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 select-none">
-        <div className="absolute -top-32 -left-24 w-[520px] h-[520px] rounded-full bg-sky-200/40 blur-3xl" />
-        <div className="absolute -top-24 -right-24 w-[560px] h-[560px] rounded-full bg-blue-200/35 blur-3xl" />
-        <svg className="hero-ribbon-a absolute -left-[6%] bottom-0 w-[62%] min-w-[520px] h-[34%] max-h-[290px]" viewBox="0 0 900 360" preserveAspectRatio="none" fill="none">
-          <defs>
-            <linearGradient id="rbA" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#7cc0ff" stopOpacity="0.5" /><stop offset="0.6" stopColor="#bcdcff" stopOpacity="0.3" /><stop offset="1" stopColor="#e8f2ff" stopOpacity="0" /></linearGradient>
-            <linearGradient id="rbB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#4aa3ff" stopOpacity="0.3" /><stop offset="1" stopColor="#d9eaff" stopOpacity="0" /></linearGradient>
-          </defs>
-          <path d="M0 150 C160 80 300 150 470 230 S760 330 900 300 V360 H0 Z" fill="url(#rbA)" />
-          <path d="M0 215 C170 150 320 220 500 285 S780 345 900 335 V360 H0 Z" fill="url(#rbB)" />
-          <path d="M0 150 C160 80 300 150 470 230 S760 330 900 300" stroke="#ffffff" strokeOpacity="0.95" strokeWidth="2.5" />
-        </svg>
-        <div className="absolute -right-[6%] bottom-0 w-[62%] min-w-[520px] h-[34%] max-h-[290px] -scale-x-100"><svg className="hero-ribbon-b w-full h-full" viewBox="0 0 900 360" preserveAspectRatio="none" fill="none">
-          <path d="M0 190 C170 120 330 190 500 255 S780 335 900 320 V360 H0 Z" fill="url(#rbA)" />
-          <path d="M0 255 C180 195 340 255 520 310 S790 350 900 345 V360 H0 Z" fill="url(#rbB)" />
-          <path d="M0 190 C170 120 330 190 500 255 S780 335 900 320" stroke="#ffffff" strokeOpacity="0.95" strokeWidth="2.5" />
-        </svg></div>
-        <div ref={glowRef} className="absolute left-0 top-0 w-[560px] h-[560px] rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.22),transparent_65%)] opacity-0 will-change-transform" />
-      </div>
-
       {/* 1. BACKGROUND LIGHT-BLUE DOME ARCH & AMBIENT RADIAL LIGHTING (REFERENCE 1:1 MATCH) */}
       <div
         aria-hidden="true"
@@ -388,31 +334,6 @@ export const AIEcosystemHero: React.FC<AIEcosystemHeroProps> = ({ onOpenDemo }) 
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Glowing arcs sweeping down from the orb on both sides */}
-        <svg aria-hidden="true" className="hidden sm:block pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-[1280px] h-[560px] overflow-visible" viewBox="0 0 1280 560" preserveAspectRatio="xMidYMin meet" fill="none">
-          <defs>
-            <linearGradient id="arcL" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="0.45" stopColor="#60a5fa" stopOpacity="0.9" /><stop offset="1" stopColor="#93c5fd" stopOpacity="0" /></linearGradient>
-            <linearGradient id="arcR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="0.45" stopColor="#60a5fa" stopOpacity="0.9" /><stop offset="1" stopColor="#93c5fd" stopOpacity="0" /></linearGradient>
-            <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" /></filter>
-          </defs>
-          <path d="M620 92 C380 96 190 200 150 470" stroke="url(#arcL)" strokeWidth="7" filter="url(#arcGlow)" opacity="0.7" />
-          <path d="M620 92 C380 96 190 200 150 470" stroke="url(#arcL)" strokeWidth="2" />
-          <path d="M660 92 C900 96 1090 200 1130 470" stroke="url(#arcR)" strokeWidth="7" filter="url(#arcGlow)" opacity="0.7" />
-          <path d="M660 92 C900 96 1090 200 1130 470" stroke="url(#arcR)" strokeWidth="2" />
-          <circle r="4" fill="#fff"><animateMotion dur="6s" repeatCount="indefinite" path="M620 92 C380 96 190 200 150 470" /></circle>
-          <circle r="4" fill="#fff"><animateMotion dur="6s" begin="-3s" repeatCount="indefinite" path="M660 92 C900 96 1090 200 1130 470" /></circle>
-        </svg>
-
-        {/* Glass orb */}
-        <div data-hero-fade aria-hidden="true" className="relative mx-auto mb-5 sm:mb-7 w-[112px] h-[112px] sm:w-[150px] sm:h-[150px]">
-          <span className="absolute -inset-8 rounded-full bg-sky-300/35 blur-2xl" />
-          <span className="hero-orb absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_26%,#ffffff_0%,#e6f1ff_42%,#b7d6ff_100%)] border border-white/90 shadow-[0_24px_60px_-12px_rgba(59,130,246,0.55),inset_0_-14px_28px_rgba(96,165,250,0.35),inset_0_4px_10px_rgba(255,255,255,0.95)] flex items-center justify-center">
-            <Users className="w-[44px] h-[44px] sm:w-[58px] sm:h-[58px] text-blue-500 drop-shadow-[0_4px_10px_rgba(37,99,235,0.35)]" strokeWidth={2.2} />
-            <span className="absolute left-[18%] top-[12%] w-[34%] h-[18%] rounded-full bg-white/80 blur-[3px] -rotate-[24deg]" />
-          </span>
-          <span className="hero-orb-ring absolute left-1/2 top-[46%] w-[230%] h-[42%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border-[2.5px] border-white/90 shadow-[0_0_18px_4px_rgba(125,190,255,0.7),inset_0_0_14px_rgba(147,197,253,0.5)] " />
-        </div>
-
         {/* CENTERED HERO CONTENT (FROM AFFINA.WORK - REAL CONTENT) */}
         <div data-hero-content className="relative z-10 text-center max-w-2xl sm:max-w-3xl mx-auto px-2">
           {/* Main Headline with Light-Blue Gradient highlight (each line rises out of a mask) */}
