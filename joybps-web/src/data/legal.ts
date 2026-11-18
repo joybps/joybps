@@ -32,7 +32,7 @@ export const TERMS: LegalSection[] = [
 
 export const COOKIES: LegalSection[] = [
   { h: 'What are cookies', p: ['Cookies are small text files stored on your device when you visit a website. They help the site work, remember preferences and understand how it is used.'] },
-  { h: 'Cookies we use', ul: ['Essential cookies and storage needed for the site and contact form to work and stay secure', 'Security cookies set by Google reCAPTCHA to tell humans from bots', 'Analytics cookies, only if enabled, to understand which pages are useful'] },
-  { h: 'Managing cookies', p: ['You can block or delete cookies in your browser settings. Blocking essential cookies may stop parts of the site, such as the contact form, from working.'] },
+  { h: 'Cookies we use', ul: ['Essential cookies and storage needed for the site and contact form to work and stay secure', 'Security cookies set by Google reCAPTCHA to tell humans from bots', 'Analytics cookies (Google Analytics), set only if you choose Accept all in the cookie bar, to understand which pages are useful','Your cookie choice itself, stored for 12 months so we do not ask you again'] },
+  { h: 'Managing cookies', p: ['You can change your choice at any time with the Cookie settings link in the footer, or block or delete cookies in your browser settings. Blocking essential cookies may stop parts of the site, such as the contact form, from working.'] },
   { h: 'Contact', p: ['Questions about this policy can be sent to admin@joybps.com.'] },
 ];

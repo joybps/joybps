@@ -1,12 +1,12 @@
 /** Single source of truth for SEO. Set NEXT_PUBLIC_SITE_URL in production to the live domain. */
 export const SITE = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://hestia.joybps.com').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.hestia.joyinfinity.com').replace(/\/$/, ''),
   name: 'Hestia',
   tagline: 'Your people. Connected. In one place.',
   description: 'Hestia is an AI-powered HRMS. Manage attendance, shifts, leave, employees, documents, projects and tasks, performance, payroll and hiring in one multi-tenant platform, with role-based access and an AI chat assistant.',
   category: 'BusinessApplication',
   keywords: ['HRMS software','AI HRMS','attendance management','payroll software','leave management','hiring software','employee management'],
-  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.joybps.com' },
+  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.hestia.joyinfinity.com' },
   email: 'admin@joybps.com',
   themeColor: '#0ea5e9',
 };

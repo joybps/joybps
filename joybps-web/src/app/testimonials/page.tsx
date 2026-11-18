@@ -3,7 +3,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Band, TestimonialsGrid, CTABand } from '../../components/Sections';
 import { pageMeta } from '../../lib/seo';
 
-export const metadata = pageMeta({ title: 'Client Reviews', description: 'What clients say about working with Joybps on websites, applications, custom software and support.', path: '/testimonials' });
+export const metadata = pageMeta({ title: 'Client Reviews', description: 'Read what Joybps clients say about working with us on websites, web and mobile applications, custom software and ongoing technical support.', path: '/testimonials' });
 
 export default function Page() {
   return (

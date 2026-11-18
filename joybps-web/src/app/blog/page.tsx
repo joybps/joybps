@@ -6,7 +6,7 @@ import { Band, CTABand } from '../../components/Sections';
 import { POSTS } from '../../data/posts';
 import { pageMeta } from '../../lib/seo';
 
-export const metadata = pageMeta({ title: 'Blog: AI and Software Insights', description: 'Practical articles on AI, software development and business technology from the Joybps team.', path: '/blog' });
+export const metadata = pageMeta({ title: 'Blog: AI and Software Insights', description: 'Practical articles on AI, custom software development, website SEO and business technology from the Joybps team, written for business owners.', path: '/blog' });
 
 export default function Page() {
   return (

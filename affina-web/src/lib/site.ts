@@ -1,12 +1,12 @@
 /** Single source of truth for SEO. Set NEXT_PUBLIC_SITE_URL in production to the live domain. */
 export const SITE = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://affina.work').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.affina.joyinfinity.com').replace(/\/$/, ''),
   name: 'Affina',
   tagline: 'One intelligent CRM. Infinite possibilities.',
   description: 'Affina is a CRM that captures leads, automates workflows and manages customer relationships, with an AI Copilot for chat and voice, built-in calling and Meta, Google and website lead capture.',
   category: 'BusinessApplication',
   keywords: ['CRM software','AI CRM','lead management','sales pipeline','WhatsApp CRM','Meta Ads lead capture','Google Ads lead capture','AI copilot'],
-  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.joybps.com' },
+  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.affina.joyinfinity.com' },
   email: 'admin@joybps.com',
   themeColor: '#0ea5e9',
 };

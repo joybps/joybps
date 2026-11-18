@@ -1,12 +1,12 @@
 /** Single source of truth for SEO. Set NEXT_PUBLIC_SITE_URL in production to the live domain. */
 export const SITE = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://joybooks.joybps.com').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.joybooks.joyinfinity.com').replace(/\/$/, ''),
   name: 'Joybooks',
   tagline: 'Every invoice. Every payment. Watch it all add up.',
   description: 'Joybooks is a complete finance and accounting platform: invoicing, bills, expenses, banking, inventory, GST and taxes, multi-currency and real-time reports in one place.',
   category: 'FinanceApplication',
   keywords: ['accounting software','cloud accounting','invoicing software','GST software','bank reconciliation','inventory','multi-currency accounting'],
-  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.joybps.com' },
+  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.joybooks.joyinfinity.com' },
   email: 'admin@joybps.com',
   themeColor: '#0ea5e9',
 };

@@ -1,12 +1,12 @@
 /** Single source of truth for SEO. Set NEXT_PUBLIC_SITE_URL in production to the live domain. */
 export const SITE = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://iris.joybps.com').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.iris.joyinfinity.com').replace(/\/$/, ''),
   name: 'Iris',
   tagline: 'Every call. Every chat. Answered by AI.',
   description: 'Iris is an AI contact center. Voice and chat agents answer your customers around the clock, hand over to your team when a human is needed, and keep every call, transcript and conversation on record.',
   category: 'BusinessApplication',
   keywords: ['AI contact center','AI voice agent','AI chat agent','call center software','customer support automation','virtual number'],
-  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.joybps.com' },
+  publisher: { name: 'Joybps', legalName: 'JBPSI India Private Limited', url: 'https://www.iris.joyinfinity.com' },
   email: 'admin@joybps.com',
   themeColor: '#0ea5e9',
 };

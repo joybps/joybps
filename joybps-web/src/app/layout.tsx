@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from 'next';
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import { SiteShell } from '../components/SiteShell';
 import { GoogleAnalytics } from '../components/GoogleAnalytics';
+import { CookieConsent } from '../components/CookieConsent';
 import { JsonLd } from '../components/JsonLd';
 import { organizationLd, websiteLd } from '../lib/seo';
 import { SITE } from '../lib/site';
 import '../index.css';
+
+// Self-hosted by Next.js at build time: no render-blocking request to Google Fonts, and the font files are preloaded.
+const sans = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap', variable: '--font-jakarta' });
+const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '600'], display: 'swap', variable: '--font-jetbrains' });
 
 const TITLE = `${SITE.name}: AI-powered software, websites and apps for business`;
 
@@ -31,14 +37,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${sans.variable} ${mono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
         <JsonLd data={[organizationLd(), websiteLd()]} />
       </head>
       <body className="bg-white text-slate-950 antialiased selection:bg-sky-100 selection:text-slate-900">
@@ -46,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteShell>{children}</SiteShell>
+        <CookieConsent />
         <GoogleAnalytics />
       </body>
     </html>

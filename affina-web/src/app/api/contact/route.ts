@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer';
 import { validateContact, LIMITS } from '../../../lib/contact-validation';
+import { enquiryEmail } from '../../../lib/contact-email';
 
 export const runtime = 'nodejs';
 
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 const clip = (v: unknown, n: number) => (typeof v === 'string' ? v.trim().slice(0, n) : '');
 /** Removes line breaks so user input can never inject mail headers. */
 const oneLine = (s: string) => s.replace(/[\r\n]+/g, ' ').trim();
@@ -86,22 +86,11 @@ export async function POST(req: Request) {
   const to = process.env.CONTACT_TO || user;
   const cc = process.env.CONTACT_CC || undefined;
 
-  const rows: [string, string][] = [
-    ['Name', name],
-    ['Email', email],
-    ['Company', company],
-    ['Phone', phone],
-    ...(interest ? ([['Interested in', interest]] as [string, string][]) : []),
-  ];
-  const text = [...rows.map(([k, v]) => `${k}: ${v}`), '', message].join('\n');
-  const html =
-    `<table cellpadding="6" style="font-family:Arial,sans-serif;font-size:14px">` +
-    rows.map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(v) || '-'}</td></tr>`).join('') +
-    `</table><p style="font-family:Arial,sans-serif;font-size:14px;white-space:pre-wrap">${esc(message)}</p>`;
+  const { text, html } = enquiryEmail({ brand: product, name, email, company, phone, interest, message, receivedAt: new Date() });
 
   try {
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.zoho.com',
+      host: process.env.SMTP_HOST || 'smtp.zoho.in',
       port: Number(process.env.SMTP_PORT || 587),
       secure: false, // port 587 starts plain and upgrades with STARTTLS
       requireTLS: true,
@@ -116,7 +105,7 @@ export async function POST(req: Request) {
       to,
       cc,
       replyTo: `"${safeName}" <${email}>`,
-      subject: `${product} enquiry from ${oneLine(name)}`,
+      subject: `[${product}] New enquiry from ${oneLine(name)}${company ? ` (${oneLine(company)})` : ''}`,
       text,
       html,
     });

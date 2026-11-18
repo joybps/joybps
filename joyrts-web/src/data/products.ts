@@ -45,7 +45,7 @@ export const PRODUCTS: Product[] = [
       { q: 'Can we design our own sales pipeline?', a: 'Yes. You define the stages, fields and rules, so the CRM follows your process instead of forcing a fixed one.' },
       { q: 'What does the AI Copilot do?', a: 'It answers questions about your leads, deals and forecasts in chat or by voice, so your team spends less time searching through screens.' },
     ],
-    url: 'https://affina.work',
+    url: 'https://www.affina.joyinfinity.com',
   },
   {
     slug: 'iris',
@@ -72,7 +72,7 @@ export const PRODUCTS: Product[] = [
       { q: 'Do we keep a record of conversations?', a: 'Every call and chat is logged with a full transcript and an AI summary, searchable from the dashboard.' },
       { q: 'Can several companies use one Iris account?', a: 'Iris is multi-tenant, so each organisation gets its own agents, numbers, widgets and data.' },
     ],
-    url: 'https://iris.joybps.com',
+    url: 'https://www.iris.joyinfinity.com',
   },
   {
     slug: 'hestia',
@@ -99,7 +99,7 @@ export const PRODUCTS: Product[] = [
       { q: 'Can Hestia run payroll?', a: 'Payroll is calculated from the attendance and leave already recorded, so there is no double entry.' },
       { q: 'What can the AI assistant answer?', a: 'Everyday HR questions such as leave balance, holidays, policies and payslips, in a simple chat.' },
     ],
-    url: 'https://hestia.joybps.com',
+    url: 'https://www.hestia.joyinfinity.com',
   },
   {
     slug: 'joybooks',
@@ -126,7 +126,7 @@ export const PRODUCTS: Product[] = [
       { q: 'Does it support bank reconciliation?', a: 'Yes. Bank lines are matched against invoices and bills so you can reconcile and close each month quickly.' },
       { q: 'Can we control who approves payments?', a: 'Roles and approvals decide who can create, approve and pay, with a clear audit trail.' },
     ],
-    url: 'https://joybooks.joybps.com',
+    url: 'https://www.joybooks.joyinfinity.com',
   },
   {
     slug: 'athena',
@@ -153,7 +153,7 @@ export const PRODUCTS: Product[] = [
       { q: 'How is labour billed?', a: 'A crew is a group of labourers with a daily charge each. Attendance marked for each day adds up to the labour cost on the invoice.' },
       { q: 'Can expenses go on the customer invoice?', a: 'Yes. Log expenses as they happen and choose which ones to bill when you create the invoice.' },
     ],
-    url: 'https://athena.joybps.com',
+    url: 'https://www.athena.joyinfinity.com',
   },
 ];
 

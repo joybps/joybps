@@ -4,6 +4,7 @@ import { JoybpsLogo } from './JoybpsLogo';
 import { PRODUCTS } from '../data/products';
 import { SERVICES } from '../data/services';
 import { SITE } from '../lib/site';
+import { CookieSettingsButton } from './CookieSettingsButton';
 
 const COMPANY = [
   { label: 'About', href: '/about' },
@@ -47,7 +48,10 @@ export const SiteFooter: React.FC = () => (
         <Col title="Products" links={PRODUCTS.map((p) => ({ label: p.name, href: `/products/${p.slug}` }))} />
         <Col title="Services" links={SERVICES.map((s) => ({ label: s.name, href: `/services/${s.slug}` }))} />
         <Col title="Company" links={COMPANY} />
-        <Col title="Legal" links={LEGAL} />
+        <div>
+          <Col title="Legal" links={LEGAL} />
+          <div className="mt-2"><CookieSettingsButton /></div>
+        </div>
       </div>
       <div className="mt-10 pt-6 border-t border-sky-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12.5px] text-slate-500">
         <p>© {new Date().getFullYear()} {SITE.legalName}. All rights reserved.</p>
