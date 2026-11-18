@@ -12,7 +12,7 @@ import '../index.css';
 const sans = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap', variable: '--font-jakarta' });
 const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '600'], display: 'swap', variable: '--font-jetbrains' });
 
-const TITLE = `${SITE.name}: AI-powered software, websites and apps for business`;
+const TITLE = `${SITE.name} | AI-Powered Software, Websites and Apps for Business`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   applicationName: SITE.name,
   authors: [{ name: SITE.legalName }],
   creator: SITE.legalName,
+  category: 'technology',
+  keywords: ['AI business software', 'website development', 'web app development', 'mobile app development', 'custom software development', 'Joybps', 'Chennai'],
   publisher: SITE.legalName,
   alternates: { canonical: SITE.url },
   openGraph: { title: TITLE, description: SITE.description, url: SITE.url, siteName: SITE.name, type: 'website', locale: 'en_IN' },

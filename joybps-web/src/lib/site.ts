@@ -5,7 +5,7 @@ export const SITE = {
   legalName: 'JBPSI India Private Limited',
   tagline: 'AI-powered software, built for how you work',
   description:
-    'Joybps designs and builds AI-powered business software, websites, web and mobile apps and custom software for businesses, with ongoing support.',
+    'Joybps builds AI-powered business software, websites, web and mobile apps and custom software for growing businesses, with ongoing support. Book a free demo.',
   email: 'admin@joybps.com',
   /** Phone number to be added later. Leave empty and it is hidden everywhere (including structured data). */
   phone: '',

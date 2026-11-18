@@ -5,7 +5,7 @@ import { Band, StatsBand, CTABand } from '../../components/Sections';
 import { pageMeta } from '../../lib/seo';
 import { SITE } from '../../lib/site';
 
-export const metadata = pageMeta({ title: 'About Joybps', description: `Joybps is the brand of ${SITE.legalName}, an AI-focused technology company in Chennai building intelligent business products and custom software.`, path: '/about' });
+export const metadata = pageMeta({ title: 'About Us', description: `Joybps is the brand of ${SITE.legalName}, an AI-focused technology company in Chennai building intelligent business products and custom software.`, path: '/about' });
 
 const VALUES = [
   { icon: Target, title: 'Useful before clever', text: 'We add intelligence only where it removes real effort from your team.' },
